@@ -1,9 +1,7 @@
 import { getBinance } from './lib/binance.js';
 import { getLunoXbtMyrRate } from './lib/luno-myr.js';
 import { getConvertRate } from './lib/convert-rate.js';
-import { getLunoXbtUsdcRate } from './lib/luno-usd.js';
-import { getPriceDiff } from './lib/price-difference.js';
-import { getLunoPremium } from './lib/luno-premium.js';
+import { getLunoXbtUsdcRate, getPriceDiff, getLunoPremium } from './lib/calculation.js';
 
 
 // BTCMYR price on Luno:
@@ -97,18 +95,18 @@ import { getLunoPremium } from './lib/luno-premium.js';
 
 // Altogether Functions
 async function lunoPremiumProject() {
-  const var1 = await getLunoXbtMyrRate()
-  const var2 = await getConvertRate()
-  const var3 = await getLunoXbtUsdcRate()
-  const var4 = await getBinance()
-  const var5 = await getPriceDiff()
-  const var6 = await getLunoPremium()
-  console.log('BTCMYR price on Luno:','      ', 'MYR', var1);
-  console.log('USDMYR:', '                    ', var2);
-  console.log('BTCUSD price on Luno:', '      ', 'USD', var3);
-  console.log('BTCBUSD price on Binance:', '  ', 'USD', var4);
-  console.log('Price Difference:', '          ', 'USD', var5);
-  console.log('Luno Premium:', '              ', var6.toFixed(4) + '%')
+  const lunoXbtMyrRate = await getLunoXbtMyrRate()
+  const convertRate = await getConvertRate()
+  const lunoXbtUsdcRate = await getLunoXbtUsdcRate()
+  const binance = await getBinance()
+  const priceDiff = await getPriceDiff()
+  const lunoPremium = await getLunoPremium()
+  console.log('BTCMYR price on Luno:','      ', 'MYR', lunoXbtMyrRate);
+  console.log('USDMYR:', '                    ', convertRate);
+  console.log('BTCUSD price on Luno:', '      ', 'USD', lunoXbtUsdcRate);
+  console.log('BTCBUSD price on Binance:', '  ', 'USD', binance);
+  console.log('Price Difference:', '          ', 'USD', priceDiff);
+  console.log('Luno Premium:', '              ', lunoPremium.toFixed(4) + '%')
 
   return +lunoPremiumProject
 }
