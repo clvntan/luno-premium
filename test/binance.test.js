@@ -7,17 +7,16 @@ beforeEach(() => {
   
     // mocking the entire node-binance-api module
     jest.mock('node-binance-api', () => {
+      const BTCBUSD = {BTCBUSD: 9}
       return class Binance {
         // we use only the prices method for this particular test, so we'll mock just this method
         prices() {
-          return new Promise(res => {
-            res({
-              BTCBUSD: 9
-            })
-          })
+          return new Promise(res => 
+            res('Binance price is not retrivable at this time, please try again')
+          )
         }
       }
     })
   
-    expect(await getBinance()).toBe(9);
+    expect(await getBinance()).toBe('Binance price is not retrivable at this time, please try again');
   });

@@ -27,16 +27,16 @@ import { getLunoXbtUsdcRate, getPriceDiff, getLunoPremium } from './lib/calculat
 // }
 // getLunoXbtMyrRate();
 
-//BTCBUSD price on Luno:
+// BTCBUSD price on Luno:
 // import { getLunoXbtMyrRate } from "./luno-myr.js";
 // import { getConvertRate } from "./convert-rate.js";
 
 // async function getLunoXbtUsdcRate() {
-//   const var1 = await getLunoXbtMyrRate()
-//   const var2 = await getConvertRate()
-//   const var3 = var1 / var2
+//   const lunoMYR = await getLunoXbtMyrRate();
+  // const convertionRate = await getConvertRate();
+  // const lunoUsdPrice = lunoMYR / convertionRate;
 
-//   return +var3
+    // return +lunoUsdPrice;
 //   }
 // getLunoXbtUsdcRate();
 
@@ -46,17 +46,18 @@ import { getLunoXbtUsdcRate, getPriceDiff, getLunoPremium } from './lib/calculat
 // Acces the 'result' value by adding .result after the value
 // async function getConvertRate() {
 //   var myHeaders = new Headers();
-//   myHeaders.append("apikey", "bzdD6lGM6xAQIMD70QO7wRZaghMYKW1L");
+//   myHeaders.append("apikey", "1ATu5XBw8952gIXug1wCO8zpyY3m2bxi");
 
 //   var requestOptions = {
 //     method: 'GET',
 //     redirect: 'follow',
 //     headers: myHeaders
 // };
-//   const exRate = await fetch("https://api.apilayer.com/fixer/convert?to=MYR&from=USD&amount=1", requestOptions) 
-//   const convertRate = await exRate.json()
-// // console.log('3. USDMYR:', convertRate.result)
-//   return +convertRate.result
+
+//   const exRate = await fetch("https://api.apilayer.com/fixer/convert?to=MYR&from=USD&amount=1", requestOptions) ;
+//   const convertRate = await exRate.json();
+// console.log("3. USDMYR:", convertRate.result)
+//   return +convertRate.result;
 // }
 // getConvertRate();
 
@@ -94,19 +95,19 @@ import { getLunoXbtUsdcRate, getPriceDiff, getLunoPremium } from './lib/calculat
 // getLunoPremium();
 
 // Altogether Functions
-async function lunoPremiumProject() {
+export async function lunoPremiumProject() {
   const lunoXbtMyrRate = await getLunoXbtMyrRate()
   const convertRate = await getConvertRate()
   const lunoXbtUsdcRate = await getLunoXbtUsdcRate()
   const binance = await getBinance()
   const priceDiff = await getPriceDiff()
   const lunoPremium = await getLunoPremium()
-  console.log('BTCMYR price on Luno:','      ', 'MYR', lunoXbtMyrRate);
-  console.log('USDMYR:', '                    ', convertRate);
-  console.log('BTCUSD price on Luno:', '      ', 'USD', lunoXbtUsdcRate);
-  console.log('BTCBUSD price on Binance:', '  ', 'USD', binance);
-  console.log('Price Difference:', '          ', 'USD', priceDiff);
-  console.log('Luno Premium:', '              ', lunoPremium.toFixed(4) + '%')
+  console.log('BTCMYR price on Luno:'.padEnd(30), 'MYR', lunoXbtMyrRate);
+  console.log('USDMYR:'.padEnd(30), convertRate);
+  console.log('BTCUSD price on Luno:'.padEnd(30), 'USD', lunoXbtUsdcRate);
+  console.log('BTCBUSD price on Binance:'.padEnd(30), 'USD', binance);
+  console.log('Price Difference:'.padEnd(30), 'USD', priceDiff);
+  console.log('Luno Premium:'.padEnd(30), lunoPremium.toFixed(4) + '%')
 
   return +lunoPremiumProject
 }

@@ -26,7 +26,7 @@ test("Return expected price different if successful", async () => {
         getPriceDiff: jest.fn().mockResolvedValue(MOCK_PD),
     }));
 
-    await expect(getPriceDiff()).resolves.toBe(MOCK_PD);
+    expect(getPriceDiff()).resolves.toBe(MOCK_PD);
 });
 
 // Begin test for getLunoPremium
@@ -38,5 +38,5 @@ test("Return expected Luno Premium if successful", async () => {
         getLunoPremium: jest.fn().mockResolvedValue(MOCK_LPM),
     }));
 
-    await expect(getLunoPremium()).resolves.toBe(MOCK_LPM);
+    expect(getLunoPremium()).resolves.toBe(MOCK_LPM);
 });
