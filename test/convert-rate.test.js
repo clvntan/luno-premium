@@ -1,27 +1,26 @@
+// Import the getConvertRate function from the convert-rate module for testing.
 import { getConvertRate } from "../lib/convert-rate.js";
 
-// Begin test code
-// Begin mocking the fetch method 
-const MOCK_RATE = 4.5
+// Begin test code & mocking the fetch method
+// Mocked conversion rate value for testing purposes.
+const MOCK_RATE = 4.5;
 
-// we're modifying the fetch method to return these values
-// To prevent actually making network request
-// Think of it as a 'built-in fetch function'
-global.fetch = jest.fn(() => Promise.resolve({
+// Modify the global fetch method to return a predefined response to prevent actual network requests.
+// Think of it as a 'built-in fetch function'.
+global.fetch = jest.fn(() =>
+  Promise.resolve({
     status: 200,
-    json: () => Promise.resolve({ result: MOCK_RATE })
-  }));
+    json: () => Promise.resolve({ result: MOCK_RATE }),
+  })
+);
+
 // End mocking the fetch method
-  
-test('Fetches conversion rate successfully', async () => {
-  //   const convertRate = await getConvertRate();
-  //   expect (fetch).toHaveBeenCalledWith('https://api.apilayer.com/fixer/convert?to=MYR&from=USD&amount=1',
-  //   {
-  //     method: 'GET',
-  //     redirect: 'follow',
-  //     headers: expect.any(Headers),
-  //   }
-  // );
+
+// Test case for fetching the conversion rate successfully.
+test("Fetches conversion rate successfully", async () => {
+
+  // Expect the result of getConvertRate to match the predefined mock conversion rate.
   expect(await getConvertRate()).toBe(MOCK_RATE);
-  });
+});
+
 // End of test code
