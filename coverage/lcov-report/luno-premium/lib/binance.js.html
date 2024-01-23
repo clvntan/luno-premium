@@ -85,76 +85,58 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Binance from 'node-binance-api';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Import the node-binance-api library to interact with the Binance API.
+import Binance from "node-binance-api";
 &nbsp;
+// Asynchronously fetches the current price of BTC in BUSD from the Binance API.
 export async function getBinance() {
-    try {
-      const binance = new Binance();
-      const ticker = await binance.prices();
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (!isNaN(ticker.BTCBUSD)) { //if the price of BTC in BUSD is not NaN will return the value
-<span class="cstat-no" title="statement not covered" >          return +ticker.BTCBUSD;</span>
+  try {
+    const binance = new Binance(); // Create a new instance of the Binance class from the node-binance-api library.
+    const ticker = await binance.prices(); // Use the prices method to fetch the ticker information from Binance.
+&nbsp;
+    // Check if the fetched price of BTC in BUSD is a valid number.
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!isNaN(ticker.BTCBUSD)) {
+<span class="cstat-no" title="statement not covered" >      return +ticker.BTCBUSD; </span>// If the price is valid, return it as a number.
     } else {
-          throw "Fetch error"
-    } 
+      throw "Fetch error"; // If the price is not a valid number, throw a custom error.
+    }
   } catch (err) {
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (err == "Fetch error") {
-          return "Binance price is not retrivable at this time, please try again"
-      }
-<span class="cstat-no" title="statement not covered" >      throw err;</span>
+    // Handle errors that may occur during the fetch operation.
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (err == "Fetch error") {
+      return "Binance price is not retrievable at this time, please try again"; // If the error is specifically a fetch error, return a user-friendly error message.
+    }
+<span class="cstat-no" title="statement not covered" >    throw err; </span>// If the error is not a fetch error, rethrow the error for further handling.
   }
-}
-&nbsp;
-// getBinance();
-&nbsp;
-&nbsp;
-&nbsp;
-// export async function getBinance() {
-//   const binance = new Binance()
-//   const ticker = await binance.prices()
-//     return +ticker.BTCBUSD
-// };
-&nbsp;</pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-22T02:08:21.006Z
+                at 2024-01-23T02:17:52.783Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,114 +1,33 @@
-import { getBinance } from './lib/binance.js';
-import { getLunoXbtMyrRate } from './lib/luno-myr.js';
-import { getConvertRate } from './lib/convert-rate.js';
-import { getLunoXbtUsdcRate, getPriceDiff, getLunoPremium } from './lib/calculation.js';
+// Import necessary functions for retrieving data and performing calculations from external modules.
+import { getBinance } from "./lib/binance.js";
+import { getLunoXbtMyrRate } from "./lib/luno-myr.js";
+import { getConvertRate } from "./lib/convert-rate.js";
+import {
+  getLunoXbtUsdcRate,
+  getPriceDiff,
+  getLunoPremium,
+} from "./lib/calculation.js";
 
-
-// BTCMYR price on Luno:
-// --- HOW TO ---
-// async function is like asking a question, and by creating 'getSomethingYouWant' <- thing you'd like to find out.
-// After that, create variable - const somethingYouWantRes <- this is to get the response.
-// Then = await fetch(url) to get the resource/data from somewhere.
-// ---- BREAK ---
-// Now we make a request by creating a variable - const somethingYouWant = await somethingYouWantRes.json().
-// .json() - we make a request from the (url) to get data, (e.g., sending some data from the server to the client, so it can be displayed on a web page, or vice versa)
-// Using console.log(to get the requested data), .last_trade <- function from luno API
-// ---- BREAK ---
-// Add return somethingYouWant.last_trade
-// Lastly, call the function - getSomethingYouWant();
-// ----
-// async function getLunoXbtMyrRate() {
-//   const lunoXbtMyrRateRes = await fetch('https://api.luno.com/api/1/ticker?pair=XBTMYR');
-
-//   const lunoXbtMyrRate = await lunoXbtMyrRateRes.json();
-//   // console.log('1. BTCMYR price on Luno:', 'MYR', lunoXbtMyrRate.last_trade)
-//   // console.log(typeof(+lunoXbtMyrRate.last_trade))
-//   return +lunoXbtMyrRate.last_trade
-// }
-// getLunoXbtMyrRate();
-
-// BTCBUSD price on Luno:
-// import { getLunoXbtMyrRate } from "./luno-myr.js";
-// import { getConvertRate } from "./convert-rate.js";
-
-// async function getLunoXbtUsdcRate() {
-//   const lunoMYR = await getLunoXbtMyrRate();
-  // const convertionRate = await getConvertRate();
-  // const lunoUsdPrice = lunoMYR / convertionRate;
-
-    // return +lunoUsdPrice;
-//   }
-// getLunoXbtUsdcRate();
-
-// USDMYR:
-// --- HOW TO ---
-// Change response.text() to response.json() - Parse the response as JSON
-// Acces the 'result' value by adding .result after the value
-// async function getConvertRate() {
-//   var myHeaders = new Headers();
-//   myHeaders.append("apikey", "1ATu5XBw8952gIXug1wCO8zpyY3m2bxi");
-
-//   var requestOptions = {
-//     method: 'GET',
-//     redirect: 'follow',
-//     headers: myHeaders
-// };
-
-//   const exRate = await fetch("https://api.apilayer.com/fixer/convert?to=MYR&from=USD&amount=1", requestOptions) ;
-//   const convertRate = await exRate.json();
-// console.log("3. USDMYR:", convertRate.result)
-//   return +convertRate.result;
-// }
-// getConvertRate();
-
-// BTCBUSD price on Binance:
-// Switch const Binance = require('node-binance-api') to import Binance from 'API';
-// import Binance from 'node-binance-api';
-// async function getBinance() {
-//   const binance = new Binance()
-    // const ticker = await binance.prices()
-    // return +ticker.BTCBUSD
-
-// }
-// getBinance();
-
-// Price difference:
-// async function getPriceDiff() {
-//   const biPrice = await getBinance();
-//   const lunoPrice = await getLunoXbtUsdcRate();
-
-//   const priceDiff = lunoPrice - biPrice;
-//   // console.log('5. Price Difference:', priceDiff);
-//   return priceDiff;
-// }
-// getPriceDiff();
-
-// Luno premium:
-// async function getLunoPremium() {
-//   const biPrice = await getBinance();
-//   const lunoPrice = await getLunoXbtUsdcRate();
-
-//   const lunoPremium = ((lunoPrice - biPrice) / lunoPrice) * 100;
-//   // console.log('6. Luno Premium:', lunoPremium.toFixed(4) + '%')
-//   return lunoPremium;
-// }
-// getLunoPremium();
-
-// Altogether Functions
+// Main function that orchestrates the Luno Premium calculation project.
 export async function lunoPremiumProject() {
-  const lunoXbtMyrRate = await getLunoXbtMyrRate()
-  const convertRate = await getConvertRate()
-  const lunoXbtUsdcRate = await getLunoXbtUsdcRate()
-  const binance = await getBinance()
-  const priceDiff = await getPriceDiff()
-  const lunoPremium = await getLunoPremium()
-  console.log('BTCMYR price on Luno:'.padEnd(30), 'MYR', lunoXbtMyrRate);
-  console.log('USDMYR:'.padEnd(30), convertRate);
-  console.log('BTCUSD price on Luno:'.padEnd(30), 'USD', lunoXbtUsdcRate);
-  console.log('BTCBUSD price on Binance:'.padEnd(30), 'USD', binance);
-  console.log('Price Difference:'.padEnd(30), 'USD', priceDiff);
-  console.log('Luno Premium:'.padEnd(30), lunoPremium.toFixed(4) + '%')
+  const lunoXbtMyrRate = await getLunoXbtMyrRate();  // Fetch the BTC to MYR rate from Luno.
+  const convertRate = await getConvertRate();  // Fetch the conversion rate from USD to MYR.
+  const lunoXbtUsdcRate = await getLunoXbtUsdcRate(lunoXbtMyrRate, convertRate); // Calculate the BTC to USDC rate on Luno using the fetched rates.
+  const binance = await getBinance(); // Fetch the current price of BTC in BUSD from Binance.
+  const priceDiff = await getPriceDiff(lunoXbtUsdcRate, binance); // Calculate the price difference between Luno and Binance rates.
+  const lunoPremium = await getLunoPremium(lunoXbtUsdcRate, binance); // Calculate the Luno Premium percentage based on rates from Binance and Luno.
 
-  return +lunoPremiumProject
+  // Display the fetched and calculated information in the console.
+  console.log("BTCMYR price on Luno:".padEnd(30), "MYR", lunoXbtMyrRate);
+  console.log("USDMYR:".padEnd(30), convertRate);
+  console.log("BTCUSD price on Luno:".padEnd(30), "USD", lunoXbtUsdcRate);
+  console.log("BTCBUSD price on Binance:".padEnd(30), "USD", binance);
+  console.log("Price Difference:".padEnd(30), "USD", priceDiff);
+  console.log("Luno Premium:".padEnd(30), lunoPremium.toFixed(4) + "%");
+
+  // Return the calculated Luno Premium as a number.
+  return +lunoPremium;
 }
+
+// Execute the lunoPremiumProject function.
 lunoPremiumProject();

@@ -85,22 +85,21 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -108,59 +107,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export async function getLunoXbtMyrRate() {
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// This function asynchronously fetches the current BTC to MYR exchange rate from the Luno API.
+export async function getLunoXbtMyrRate() {
   try {
-    const lunoXbtMyrRateRes = await fetch('https://api.luno.com/api/1/ticker?pair=XBTMYR'); // gets the price pair for BTC in MYR
+    // Fetch the latest ticker information for the XBTMYR pair from the Luno API.
+    const lunoXbtMyrRateRes = await fetch(
+      "https://api.luno.com/api/1/ticker?pair=XBTMYR"
+    );
+&nbsp;
+    // Check if the API response status is successful (200 OK).
     if (lunoXbtMyrRateRes.status === 200) {
-        const lunoXbtMyrRate = await lunoXbtMyrRateRes.json();
-        return +lunoXbtMyrRate.last_trade; // should return the expected value
+      const lunoXbtMyrRate = await lunoXbtMyrRateRes.json(); // Parse the JSON response to extract the relevant information.
+      return +lunoXbtMyrRate.last_trade; // Return the last_trade value as a number, representing the current BTC to MYR exchange rate.
     } else {
-        throw "Fetch error";
+      throw "Fetch error"; // If the API response status is not successful, throw a custom error.
     }
   } catch (err) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if(err === "Fetch error") {
-        return "Failed to retrieve Luno price at this time, please try again."
+    // Handle errors that may occur during the fetch operation.
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (err === "Fetch error") {
+      return "Failed to retrieve Luno price at this time, please try again."; // If the error is specifically a fetch error, return a user-friendly error message.
     }
-<span class="cstat-no" title="statement not covered" >    throw err;</span>
-}
-}
-&nbsp;
-// getLunoXbtMyrRate();
-&nbsp;
-  // export async function getLunoXbtMyrRate() {
-  //   const lunoXbtMyrRateRes = await fetch('https://api.luno.com/api/1/ticker?pair=XBTMYR'); // gets the price pair for BTC in MYR
-  //   // handle situation where fetch fails e.g. when status code is anything other than 2xx
-  //   if (lunoXbtMyrRateRes.status !== 200) {
-  //     console.error('Failed to retrieve price')
-  //   }
-&nbsp;
-  //   const lunoXbtMyrRate = await lunoXbtMyrRateRes.json();
-  //   // console.log('1. BTCMYR price on Luno:', 'MYR', lunoXbtMyrRate.last_trade)
-  //   return +lunoXbtMyrRate.last_trade;  // should return the expected value
-  // }
-&nbsp;</pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >    throw err; </span>// If the error is not a fetch error, rethrow the error for further handling.
+  }
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-22T02:08:21.006Z
+                at 2024-01-23T02:17:52.783Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
