@@ -15,7 +15,7 @@ export async function lunoPremiumProject() {
   const lunoXbtUsdcRate = await getLunoXbtUsdcRate(lunoXbtMyrRate, convertRate); // Calculate the BTC to USDC rate on Luno using the fetched rates.
   const binance = await getBinance(); // Fetch the current price of BTC in BUSD from Binance.
   const priceDiff = await getPriceDiff(lunoXbtUsdcRate, binance); // Calculate the price difference between Luno and Binance rates.
-  const lunoPremium = await getLunoPremium(lunoXbtUsdcRate, binance); // Calculate the Luno Premium percentage based on rates from Binance and Luno.
+  const lunoPremium = await getLunoPremium(priceDiff, lunoXbtUsdcRate); // Calculate the Luno Premium percentage based on rates from Binance and Luno.
 
   // Display the fetched and calculated information in the console.
   console.log("BTCMYR price on Luno:".padEnd(30), "MYR", lunoXbtMyrRate);
